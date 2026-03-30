@@ -594,7 +594,7 @@ visible_characters = 7
 
 [node name="Timer" type="Timer" parent="HealthDisplay" unique_id=1147769158]
 
-[node name="WinDisplay" type="Control" parent="." unique_id=1231093158 node_paths=PackedStringArray("win_anim", "win_label", "DON_score_ui", "DON_label", "DON", "DON_show", "DON_hide", "timer")]
+[node name="WinDisplay" type="Control" parent="." unique_id=1231093158 node_paths=PackedStringArray("win_anim", "win_label", "DON_UI", "DON_label", "DON_score", "DON_yes", "DON_no", "DON", "DON_show", "DON_hide", "timer")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -605,8 +605,11 @@ theme = ExtResource("1_0wfyh")
 script = ExtResource("9_ya4ey")
 win_anim = NodePath("WinAnim")
 win_label = NodePath("WinText")
-DON_score_ui = NodePath("DON_Money_Label")
-DON_label = NodePath("DoubleOrNothing")
+DON_UI = NodePath("DON")
+DON_label = NodePath("DON/DoubleOrNothing")
+DON_score = NodePath("DON/DON_Money_Label")
+DON_yes = NodePath("DON/DON_YesNo/YesButton")
+DON_no = NodePath("DON/DON_YesNo/NoButton")
 DON = NodePath("../Audio/Animator/DON")
 DON_show = NodePath("../Audio/Animator/DON_Show")
 DON_hide = NodePath("../Audio/Animator/DON_Hide")
@@ -660,7 +663,8 @@ offset_bottom = 183.0
 texture = ExtResource("13_jbj1t")
 expand_mode = 1
 
-[node name="DoubleOrNothing" type="Label" parent="WinDisplay" unique_id=2094060975]
+[node name="DON" type="VBoxContainer" parent="WinDisplay" unique_id=2016151679]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -668,40 +672,48 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -423.0
-offset_top = -152.0
+offset_top = -109.5
 offset_right = 423.0
-offset_bottom = -62.0
+offset_bottom = 109.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_0wfyh")
+
+[node name="DoubleOrNothing" type="Label" parent="WinDisplay/DON" unique_id=2094060975]
+visible = false
+layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "double or nothing?"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="DON_Money_Label" type="Label" parent="WinDisplay" unique_id=701121851]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -423.0
-offset_top = -45.0
-offset_right = 423.0
-offset_bottom = 45.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="DON_Money_Label" type="Label" parent="WinDisplay/DON" unique_id=701121851]
+layout_mode = 2
 theme_override_font_sizes/font_size = 90
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="DON_YesNo" type="HBoxContainer" parent="WinDisplay/DON" unique_id=1329065317]
+layout_mode = 2
+
+[node name="YesButton" type="Button" parent="WinDisplay/DON/DON_YesNo" unique_id=1584486982]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "YES"
+
+[node name="NoButton" type="Button" parent="WinDisplay/DON/DON_YesNo" unique_id=1297191415]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NO"
+
 [node name="Timer" type="Timer" parent="WinDisplay" unique_id=1497161198]
 one_shot = true
 
 [node name="PlayerEntry" parent="." unique_id=1679587246 node_paths=PackedStringArray("health_display") instance=ExtResource("1_eb6dy")]
-visible = false
 offset_left = -127.5
 offset_top = -32.0
 offset_right = 127.5

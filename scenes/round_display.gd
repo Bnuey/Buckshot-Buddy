@@ -6,8 +6,9 @@ extends Control
 @export_group("Node Dependencies")
 @export var win_anim: AnimationPlayer
 @export var win_label: Label
-@export var DON_score_ui: Label
-@export var DON_label: Label
+@export var DON_UI: Control
+@export var DON_label: Control
+@export var DON_score: Control
 @export var DON_yes: Button
 @export var DON_no: Button
 @export var DON: AudioStreamPlayer
@@ -25,6 +26,10 @@ var dur: float = 3
 var score_lerping: bool
 
 var score_timer: Timer
+
+func _ready() -> void:
+	DON_yes.pressed.connect(yes_pressed)
+	DON_no.pressed.connect(no_pressed)
 
 func _process(_delta: float) -> void:
 	if score_lerping:
@@ -44,17 +49,30 @@ func play_win(player_name: String) -> void:
 	global.round_display_complete.emit()
 
 func double_or_nothing() -> void:
-	DON_score_ui.show()
 	DON_show.play()
+	timer.start(.5)
+	await timer.timeout
+	DON_UI.show()
 	DON.play()
 	timer.start(1.65)
 	await timer.timeout
 	score_lerping = true
 	timer.start(3)
 	await timer.timeout
+	DON_yes.show()
+	DON_no.show()
+	DON_label.show()
 
 func lerp_score() -> void:
 	elapsed += get_process_delta_time()
 	var c = clampf(elapsed / dur, 0.0, 1.0)
 	var score = lerp(lerp_start, lerp_end, c)
-	DON_score_ui.text = str(int(score))
+	DON_score.text = str(int(score))
+
+func yes_pressed() -> void:
+	DON_hide.play()
+	global.start_new_game()
+
+func no_pressed() -> void:
+	DON_hide.play()
+	get_tree().quit()

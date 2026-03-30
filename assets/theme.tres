@@ -19,6 +19,8 @@ thickness = 10
 vertical = true
 
 [resource]
+Button/font_sizes/font_size = 80
+Button/fonts/font = ExtResource("1_5x3i2")
 HSeparator/styles/separator = SubResource("StyleBoxLine_o5qli")
 Invisible_VSeparator/base_type = &"VSeparator"
 Invisible_VSeparator/styles/separator = SubResource("StyleBoxLine_5x3i2")
